@@ -1,47 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import User from './User';
+import axios from 'axios';
 import UserSearchForm from './UserSearchForm';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import styles from './styles/UserListStyles';
 
-function UserList() {
+function UserList(props) {
+	const { classes } = props;
+	const [ users, setUsers ] = useState([]);
+
+	useEffect(() => {
+		async function fetchUsers() {
+			const response = await axios.get(
+				'https://teacode-recruitment-challenge.s3.eu-central-1.amazonaws.com/users.json'
+			);
+			setUsers(response.data);
+		}
+		fetchUsers();
+	}, []);
+
 	return (
-		<Paper
-			style={{
-				padding: 0,
-				margin: 0,
-				height: '100vh',
-				backgroundColor: '#fafafa'
-			}}
-			elevation={0}
-		>
-			<AppBar position="static">
-				<Toolbar
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						background: '#75cfb8'
-					}}
-				>
+		<Paper className={classes.root} elevation={0}>
+			<AppBar
+				position="static"
+				className={classes.appBarContent}
+			>
+				<Toolbar>
 					<Typography>Contacts</Typography>
 				</Toolbar>
 			</AppBar>
+			{/* <div>
+				<UserSearchForm />
+			</div> */}
+
 			<Grid
 				container
 				justify="center"
-				style={{ marginTop: '1rem' }}
+				className={classes.userGrid}
 			>
-				<Grid item xs={11} md={8} lg={4}>
+				<Grid item xs={12} md={12} lg={12}>
 					<UserSearchForm />
-					<User />
+					<User users={users} />
 				</Grid>
 			</Grid>
 		</Paper>
 	);
 }
 
-export default UserList;
+export default withStyles(styles)(UserList);
