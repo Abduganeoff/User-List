@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import {
 	List,
 	AutoSizer,
@@ -7,8 +7,11 @@ import {
 } from 'react-virtualized';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles/UserStyles';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import Checkbox from '@material-ui/core/Checkbox';
 
-function User({ users, classes }) {
+function User({ users, classes, toggle, print }) {
 	const cache = useRef(
 		new CellMeasurerCache({
 			fixedWidth: true,
@@ -43,9 +46,19 @@ function User({ users, classes }) {
 										rowIndex={index}
 									>
 										<div style={style}>
-											<li className={classes.listItem}>
-												<div className={classes.avatar}>
+											<li
+												className={
+													classes.listItem
+												}
+												onClick={() => {
+													toggle(person.id);
+												}}
+											>
+												<div>
 													<img
+														className={
+															classes.avatar
+														}
 														src={
 															person.avatar
 														}
@@ -54,16 +67,35 @@ function User({ users, classes }) {
 														}
 													/>
 												</div>
-												<div className={classes.content}>
+												<div
+													className={
+														classes.content
+													}
+												>
 													<h1>
-														{
-															person.first_name
-														}
+														{`${person.first_name} ${person.last_name}`}
 													</h1>
 													<p>
 														{person.email}
 													</p>
 												</div>
+												<ListItemSecondaryAction
+												>
+													<IconButton aria-label="Checkbox">
+														<Checkbox
+															tabIndex={
+																-1
+															}
+															checked={
+																person.isChecked
+															}
+															// onClick={() => {
+															// 	toggle(person.id);
+															// 	console.log(person.isChecked);
+															// }}
+														/>
+													</IconButton>
+												</ListItemSecondaryAction>
 											</li>
 										</div>
 									</CellMeasurer>
@@ -77,4 +109,4 @@ function User({ users, classes }) {
 	);
 }
 
-export default withStyles(styles)(User);
+export default memo(withStyles(styles)(User));

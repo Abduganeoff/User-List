@@ -19,10 +19,39 @@ function UserList(props) {
 			const response = await axios.get(
 				'https://teacode-recruitment-challenge.s3.eu-central-1.amazonaws.com/users.json'
 			);
-			setUsers(response.data);
+			const updatedUsers = response.data.map((user) => ({
+				...user,
+				isChecked: false
+			}));
+			setUsers(updatedUsers);
 		}
 		fetchUsers();
 	}, []);
+
+	const toggle = (id, callback) => {
+		const updatedUsers = users.map(
+			(user) =>
+				user.id === id
+					? { ...user, isChecked: !user.isChecked }
+					: user
+		);
+
+		setUsers(updatedUsers);
+		callback();
+	};
+
+	const printCheckedUsers = () => {
+		const filtered = users.filter(
+			(user) => user.isChecked === true
+		);
+		// .forEach((user) => {
+		// 	console.log(user.id);
+		// });
+		const print = filtered.reduce((acc, curr) => {
+			return (acc += ' ' + curr.id);
+		}, '');
+		console.log(print);
+	};
 
 	return (
 		<Paper className={classes.root} elevation={0}>
@@ -37,7 +66,11 @@ function UserList(props) {
 			<Grid container justify="center">
 				<Grid item xs={12} md={12} lg={12}>
 					<UserSearchForm />
-					<User users={users} />
+					<User
+						users={users}
+						toggle={toggle}
+						// print={printCheckedUsers}
+					/>
 				</Grid>
 			</Grid>
 		</Paper>
