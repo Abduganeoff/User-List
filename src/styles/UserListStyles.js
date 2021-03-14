@@ -10,9 +10,6 @@ const styles = (theme) => ({
 		alignItems: 'center',
 		justifyContent: 'center',
 		background: '#75cfb8'
-	},
-	userGrid: {
-		marginTop: '1rem'
 	}
 });
 

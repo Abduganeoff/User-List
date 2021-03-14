@@ -34,15 +34,7 @@ function UserList(props) {
 					<Typography>Contacts</Typography>
 				</Toolbar>
 			</AppBar>
-			{/* <div>
-				<UserSearchForm />
-			</div> */}
-
-			<Grid
-				container
-				justify="center"
-				className={classes.userGrid}
-			>
+			<Grid container justify="center">
 				<Grid item xs={12} md={12} lg={12}>
 					<UserSearchForm />
 					<User users={users} />

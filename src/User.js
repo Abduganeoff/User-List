@@ -5,8 +5,10 @@ import {
 	CellMeasurer,
 	CellMeasurerCache
 } from 'react-virtualized';
+import { withStyles } from '@material-ui/core/styles';
+import styles from './styles/UserStyles';
 
-function User({ users }) {
+function User({ users, classes }) {
 	const cache = useRef(
 		new CellMeasurerCache({
 			fixedWidth: true,
@@ -41,19 +43,28 @@ function User({ users }) {
 										rowIndex={index}
 									>
 										<div style={style}>
-											<img
-												src={person.avatar}
-												alt={person.id}
-											/>
-
-											<div>
-												<h1>
-													{
-														person.first_name
-													}
-												</h1>
-												<p>{person.email}</p>
-											</div>
+											<li className={classes.listItem}>
+												<div className={classes.avatar}>
+													<img
+														src={
+															person.avatar
+														}
+														alt={
+															person.id
+														}
+													/>
+												</div>
+												<div className={classes.content}>
+													<h1>
+														{
+															person.first_name
+														}
+													</h1>
+													<p>
+														{person.email}
+													</p>
+												</div>
+											</li>
 										</div>
 									</CellMeasurer>
 								);
@@ -66,4 +77,4 @@ function User({ users }) {
 	);
 }
 
-export default User;
+export default withStyles(styles)(User);
