@@ -23,42 +23,37 @@ function UserList(props) {
 				...user,
 				isChecked: false
 			}));
-			setUsers(updatedUsers);
+			const sortedByFirstName = updatedUsers.sort((a, b) =>
+				a.last_name.localeCompare(b.last_name)
+			);
+			setUsers(sortedByFirstName);
 		}
 		fetchUsers();
 	}, []);
 
-	const toggle = (id, callback) => {
+	useEffect(
+		() => {
+			const filtered = users.filter((user) => user.isChecked === true);
+			const print = filtered.reduce((acc, curr) => {
+				return (acc += ' ' + curr.id);
+			}, '');
+			console.log(print);
+		},
+		[ users ]
+	);
+
+	const toggle = (id) => {
 		const updatedUsers = users.map(
 			(user) =>
-				user.id === id
-					? { ...user, isChecked: !user.isChecked }
-					: user
+				user.id === id ? { ...user, isChecked: !user.isChecked } : user
 		);
 
 		setUsers(updatedUsers);
-		callback();
-	};
-
-	const printCheckedUsers = () => {
-		const filtered = users.filter(
-			(user) => user.isChecked === true
-		);
-		// .forEach((user) => {
-		// 	console.log(user.id);
-		// });
-		const print = filtered.reduce((acc, curr) => {
-			return (acc += ' ' + curr.id);
-		}, '');
-		console.log(print);
 	};
 
 	return (
 		<Paper className={classes.root} elevation={0}>
-			<AppBar
-				position="static"
-				className={classes.appBarContent}
-			>
+			<AppBar position="static" className={classes.appBarContent}>
 				<Toolbar>
 					<Typography>Contacts</Typography>
 				</Toolbar>
@@ -66,11 +61,7 @@ function UserList(props) {
 			<Grid container justify="center">
 				<Grid item xs={12} md={12} lg={12}>
 					<UserSearchForm />
-					<User
-						users={users}
-						toggle={toggle}
-						// print={printCheckedUsers}
-					/>
+					<User users={users} toggle={toggle} />
 				</Grid>
 			</Grid>
 		</Paper>

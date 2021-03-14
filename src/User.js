@@ -11,7 +11,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 
-function User({ users, classes, toggle, print }) {
+function User({ users, classes, toggle }) {
 	const cache = useRef(
 		new CellMeasurerCache({
 			fixedWidth: true,
@@ -30,12 +30,7 @@ function User({ users, classes, toggle, print }) {
 							rowHeight={cache.current.rowHeight}
 							defferedMeasurementCache={cache.current}
 							rowCount={users.length}
-							rowRenderer={({
-								key,
-								index,
-								style,
-								parent
-							}) => {
+							rowRenderer={({ key, index, style, parent }) => {
 								const person = users[index];
 								return (
 									<CellMeasurer
@@ -47,9 +42,7 @@ function User({ users, classes, toggle, print }) {
 									>
 										<div style={style}>
 											<li
-												className={
-													classes.listItem
-												}
+												className={classes.listItem}
 												onClick={() => {
 													toggle(person.id);
 												}}
@@ -59,40 +52,25 @@ function User({ users, classes, toggle, print }) {
 														className={
 															classes.avatar
 														}
-														src={
-															person.avatar
-														}
-														alt={
-															person.id
-														}
+														src={person.avatar}
+														alt={person.id}
 													/>
 												</div>
 												<div
-													className={
-														classes.content
-													}
+													className={classes.content}
 												>
 													<h1>
 														{`${person.first_name} ${person.last_name}`}
 													</h1>
-													<p>
-														{person.email}
-													</p>
+													<p>{person.email}</p>
 												</div>
-												<ListItemSecondaryAction
-												>
+												<ListItemSecondaryAction>
 													<IconButton aria-label="Checkbox">
 														<Checkbox
-															tabIndex={
-																-1
-															}
+															tabIndex={-1}
 															checked={
 																person.isChecked
 															}
-															// onClick={() => {
-															// 	toggle(person.id);
-															// 	console.log(person.isChecked);
-															// }}
 														/>
 													</IconButton>
 												</ListItemSecondaryAction>
