@@ -1,8 +1,8 @@
-const styles = (theme) => ({
+const styles = () => ({
 	searchIcon: {
 		position: 'absolute',
 		left: '0.5em',
-		top: '4.2em',
+		top: '3.6em',
 		width: 20,
 		height: 20,
 		color: '#bbbbbb'

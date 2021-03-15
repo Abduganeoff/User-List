@@ -13,7 +13,7 @@ import styles from './styles/UserListStyles';
 function UserList(props) {
 	const { classes } = props;
 	const [ users, setUsers ] = useState([]);
-	
+	const [ forSortUsers, setForSortUsers ] = useState([]);
 
 	useEffect(() => {
 		async function fetchUsers() {
@@ -28,6 +28,7 @@ function UserList(props) {
 				a.last_name.localeCompare(b.last_name)
 			);
 			setUsers(sortedByFirstName);
+			setForSortUsers(sortedByFirstName);
 		}
 		fetchUsers();
 	}, []);
@@ -50,10 +51,11 @@ function UserList(props) {
 		);
 
 		setUsers(updatedUsers);
+		setForSortUsers(updatedUsers);
 	};
 
 	const searUserByFullName = (fullName) => {
-		const splittedFullName = fullName.split(' ');
+		const splittedFullName = fullName.trim().split(' ');
 		const [ name, surname ] = splittedFullName;
 		if (splittedFullName.length === 2) {
 			const updatedUsers = users.filter((user) => {
@@ -62,7 +64,7 @@ function UserList(props) {
 					user.last_name.toLowerCase() === surname.toLowerCase()
 				);
 			});
-			setUsers(updatedUsers);
+			setForSortUsers(updatedUsers);
 			return;
 		}
 		console.log('Invalid Input');
@@ -78,7 +80,7 @@ function UserList(props) {
 			<Grid container justify="center">
 				<Grid item xs={12} md={12} lg={12}>
 					<UserSearchForm search={searUserByFullName} />
-					<User users={users} toggle={toggle} />
+					<User users={forSortUsers} toggle={toggle} />
 				</Grid>
 			</Grid>
 		</Paper>

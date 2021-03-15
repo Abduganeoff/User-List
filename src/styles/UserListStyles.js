@@ -1,4 +1,4 @@
-const styles = (theme) => ({
+const styles = () => ({
 	root: {
 		padding: 0,
 		margin: 0,
@@ -9,7 +9,8 @@ const styles = (theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		background: '#75cfb8'
+		background: '#75cfb8',
+		marginBottom: '-0.96em'
 	}
 });
 

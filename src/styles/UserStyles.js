@@ -1,4 +1,4 @@
-const styles = (theme) => ({
+const styles = () => ({
 	listItem: {
 		display: 'flex',
 		borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
