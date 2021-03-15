@@ -8,7 +8,8 @@ const styles = (theme) => ({
 		width: '80px',
 		height: '80px',
 		margin: '1.5em 1em 0 1em',
-		border: '2px solid #bbbbbb'
+		border: '2px solid #bbbbbb',
+		backgroundColor: 'white'
 	}
 });
 

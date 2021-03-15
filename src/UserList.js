@@ -13,6 +13,7 @@ import styles from './styles/UserListStyles';
 function UserList(props) {
 	const { classes } = props;
 	const [ users, setUsers ] = useState([]);
+	
 
 	useEffect(() => {
 		async function fetchUsers() {
@@ -51,6 +52,22 @@ function UserList(props) {
 		setUsers(updatedUsers);
 	};
 
+	const searUserByFullName = (fullName) => {
+		const splittedFullName = fullName.split(' ');
+		const [ name, surname ] = splittedFullName;
+		if (splittedFullName.length === 2) {
+			const updatedUsers = users.filter((user) => {
+				return (
+					user.first_name.toLowerCase() === name.toLowerCase() &&
+					user.last_name.toLowerCase() === surname.toLowerCase()
+				);
+			});
+			setUsers(updatedUsers);
+			return;
+		}
+		console.log('Invalid Input');
+	};
+
 	return (
 		<Paper className={classes.root} elevation={0}>
 			<AppBar position="static" className={classes.appBarContent}>
@@ -60,7 +77,7 @@ function UserList(props) {
 			</AppBar>
 			<Grid container justify="center">
 				<Grid item xs={12} md={12} lg={12}>
-					<UserSearchForm />
+					<UserSearchForm search={searUserByFullName} />
 					<User users={users} toggle={toggle} />
 				</Grid>
 			</Grid>

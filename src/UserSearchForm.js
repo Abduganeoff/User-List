@@ -6,14 +6,14 @@ import SearchIcon from '@material-ui/icons/Search';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles/UserSearchFormStyles';
 
-function UserSearchForm({ classes }) {
+function UserSearchForm({ classes, search }) {
 	const [ value, handleChange, reset ] = useInputForm('');
 	return (
 		<Paper style={{ margin: '1rem 0', padding: '0 1rem' }}>
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					console.log(value);
+					search(value);
 					reset();
 				}}
 			>
